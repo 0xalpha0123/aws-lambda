@@ -37,27 +37,28 @@ export const App = () => {
     }
   };
  // connect to API_URL
-  const userDataList = async () => {
-    try {
-      const res = await fetch(API_URL);
-      const userData = await res.json();
-      if (userData !== null || userData !== undefined) {
-        const { targetValue, current } = userData;
-        setTargetValue(targetValue);
-        setCurrent(current);
-        return userData;
-      }
-      return;
-    } 
-    catch (error) {
-      console.log(error)
-    }
-  };
+  
 
   // when component is rendered, calling
    useEffect(() => {
+    const userDataList = async () => {
+      try {
+        const res = await fetch(API_URL);
+        const userData = await res.json();
+        if (userData !== null || userData !== undefined) {
+          const { targetValue, current } = userData;
+          setTargetValue(targetValue);
+          setCurrent(current);
+          return userData;
+        }
+        return;
+      } 
+      catch (error) {
+        console.log(error)
+      }
+    };
      userDataList();
-   }, []);
+   }, [API_URL]);
 
  // When user edit a mount of targetValue, update the value of targetValue and dynamodb
   const targetValueValueUpdateHandle = (event) => {
