@@ -16,11 +16,6 @@ export const App = () => {
   //edit modal setting variable
   const [targetEdit, setTargetEdit] = useState(false);
 
- // when component is rendered, calling
-  useEffect(() => {
-    userDataList();
-  }, []);
-
   // API URl
   const API_URL = `https://r6ah8ijxul.execute-api.us-east-1.amazonaws.com/pro/vv/2`;
   // connect to API_URL
@@ -28,7 +23,10 @@ export const App = () => {
     try {
       const res = await fetch(API_URL, {
         method: "PUT",
-        headers: { "Content-Type": "application/json",},
+        headers: {
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*'
+        },
         body: JSON.stringify({ targetValue, current }),
       });
       const userData = await res.json();
@@ -55,6 +53,11 @@ export const App = () => {
       console.log(error)
     }
   };
+
+  // when component is rendered, calling
+   useEffect(() => {
+     userDataList();
+   }, []);
 
  // When user edit a mount of targetValue, update the value of targetValue and dynamodb
   const targetValueValueUpdateHandle = (event) => {
